@@ -7,9 +7,10 @@ dotenv.config({
     : path.resolve(__dirname, "../.env"),
 });
 
-const { PORT, PRIVATE_KEY, PUBLIC_KEY, DB_URI } = process.env;
+const { PORT, PRIVATE_KEY, PUBLIC_KEY, DB_URI, ORIGIN } = process.env;
 
 export default {
+  origin: ORIGIN?.split(","),
   port: PORT,
   dbUri: DB_URI,
   saltWorkFactor: 10,
