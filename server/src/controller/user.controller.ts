@@ -1,7 +1,8 @@
 import { Request, Response } from "express";
-import { omit } from "lodash";
+// import { omit } from "lodash";
 import { CreateUserInput } from "../schema/user.schema";
-import { createUserService } from "../services/user.service";
+import { createUserService, findUserService } from "../services/user.service";
+import BaseError from "../utils/error.utils";
 import logger from "../utils/logger.utils";
 
 export async function createUserHandler(
@@ -9,6 +10,18 @@ export async function createUserHandler(
   res: Response
 ) {
   try {
+    const existEmail = await findUserService({
+      email: req.body.email,
+    });
+
+    if (existEmail) {
+      throw new BaseError(
+        "AUTH",
+        409,
+        "Email already registred, please login!"
+      );
+    }
+
     const user = await createUserService(req.body);
 
     return res.status(201).json({
@@ -17,7 +30,7 @@ export async function createUserHandler(
     });
   } catch (error: any) {
     logger.error(error);
-    return res.status(409).json({
+    return res.status(error.statusCode || 409).json({
       message: error.message,
     });
   }
