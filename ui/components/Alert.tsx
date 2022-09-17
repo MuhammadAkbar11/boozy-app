@@ -1,34 +1,29 @@
 import React from "react";
 import clsx from "classnames";
+import { mapToCssModules } from "./utils";
+import AlertIcon from "./AlertIcon";
 
-type Props = {
-  variant?: "error" | "success" | "info";
-  message: string;
-};
+interface Props extends React.HTMLAttributes<HTMLDivElement> {
+  variant?: "default" | "error" | "success" | "info" | "warning";
+  children: React.ReactNode;
+}
 
-function Alert({ variant = "success", message }: Props) {
+function Alert(props: Props) {
+  const { variant = "success", children, className, ...attr } = props;
+
   const color = clsx({
     "alert-error": variant === "error",
     "alert-success": variant === "success",
+    "alert-info": variant === "info",
+    "alert-warning": variant === "warning",
   });
+
+  const classes = mapToCssModules(clsx(className, "alert", "shadow-lg", color));
+
   return (
-    <div className={`alert ${color} shadow-lg`}>
-      <div>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="stroke-current flex-shrink-0 h-6 w-6"
-          fill="none"
-          viewBox="0 0 24 24"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-            d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
-          />
-        </svg>
-        <span>{message}</span>
-      </div>
+    <div {...attr} className={classes}>
+      <AlertIcon variant={variant} />
+      <div className="w-full">{children}</div>
     </div>
   );
 }
