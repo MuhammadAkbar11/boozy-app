@@ -7,7 +7,7 @@ dotenv.config({
     : path.resolve(__dirname, "../.env"),
 });
 
-const { PORT, PRIVATE_KEY, PUBLIC_KEY, DB_URI, ORIGIN } = process.env;
+const { PORT, PRIVATE_KEY, PUBLIC_KEY, DB_URI, ORIGIN, DOMAIN } = process.env;
 
 export default {
   origin: ORIGIN?.split(","),
@@ -18,4 +18,5 @@ export default {
   refreshTokenTtl: "7d",
   publicKey: PUBLIC_KEY,
   privateKey: PRIVATE_KEY,
+  domain: DOMAIN,
 };
