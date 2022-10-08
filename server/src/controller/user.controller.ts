@@ -35,3 +35,14 @@ export async function createUserHandler(
     });
   }
 }
+
+export async function getCurrentUser(req: Request, res: Response) {
+  try {
+    return res.send(res.locals.user);
+  } catch (error: any) {
+    logger.error(error);
+    return res.status(error.statusCode || 409).json({
+      message: error.message,
+    });
+  }
+}
