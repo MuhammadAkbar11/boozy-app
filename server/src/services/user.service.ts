@@ -41,5 +41,5 @@ export async function validatePassword({
 export async function findUserService(
   query: mongoose.FilterQuery<UserDocument>
 ) {
-  return await UserModel.findOne(query).lean();
+  return await UserModel.findOne(query).lean().select("-password");
 }
