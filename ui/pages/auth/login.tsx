@@ -63,12 +63,17 @@ function LoginPage({}: Props) {
   return (
     <>
       <Head>
-        <title>Login</title>
+        <title>Login to Boozy.io | Boozy.io</title>
       </Head>
       <div className=" w-full flex flex-col p-3 justify-center items-center min-h-screen    ">
-        <div className="card w-full sm:w-2/3 md:w-2/5 bg-neutral text-neutral-content">
+        <div className="card w-full sm:w-2/3 md:w-2/5 bg-transparent text-neutral-content">
           <div className="card-body items-center text-center">
-            <h2 className="card-title">Login!</h2>
+            <h1 className="card-title text-4xl ">
+              Login to{" "}
+              <Link href={"/"}>
+                <a className="text-primary">Boozy.io</a>
+              </Link>
+            </h1>
             {loginError && (
               <div className="my-2 w-full ">
                 <Alert variant="error">{loginError}</Alert>
@@ -84,7 +89,7 @@ function LoginPage({}: Props) {
                   id="email"
                   type="email"
                   placeholder="example@gmail.com"
-                  className="input w-full "
+                  className="input w-full bg-neutral"
                 />
                 {errors.email?.message && (
                   <InputAlertLabel text={errors.email?.message || ""} />
@@ -99,7 +104,7 @@ function LoginPage({}: Props) {
                   type={showPw ? "text" : "password"}
                   placeholder="*******"
                   id="password"
-                  className="input w-full"
+                  className="input w-full bg-neutral"
                 />
                 {errors.password?.message && (
                   <InputAlertLabel text={errors.password?.message || ""} />
@@ -125,9 +130,9 @@ function LoginPage({}: Props) {
                 </Button>
                 <div>
                   Does not have an account?
-                  <Link href={"/auth/register"}>
-                    <a className=" btn btn-link capitalize font-normal  p-0 ml-1 ">
-                      Registration
+                  <Link href={"/auth/started"}>
+                    <a className=" btn btn-link normal-case  font-normal  p-0 ml-1 ">
+                      Join now
                     </a>
                   </Link>
                 </div>
