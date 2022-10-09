@@ -11,7 +11,10 @@ import {
   deleteSessionHandler,
   getUserSessionHandler,
 } from "./controller/session.controller";
-import { createUserHandler } from "./controller/user.controller";
+import {
+  createUserHandler,
+  getCurrentUser,
+} from "./controller/user.controller";
 import requiredUser from "./middleware/requiredUser";
 import validateResource from "./middleware/validateResource";
 import {
@@ -30,6 +33,7 @@ function routes(app: Application) {
 
   // users
   app.post("/api/users", validateResource(createUserSchema), createUserHandler);
+  app.get("/api/me", requiredUser, getCurrentUser);
 
   // session
   app.post(

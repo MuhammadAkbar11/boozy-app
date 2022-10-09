@@ -40,7 +40,7 @@ const createUserSchema = z
 
 type CreateUserInput = z.TypeOf<typeof createUserSchema>;
 
-function RegisterPage({}: Props) {
+function GetStartedPage({}: Props) {
   const router = useRouter();
 
   const [loading, setLoading] = React.useState(false);
@@ -73,12 +73,17 @@ function RegisterPage({}: Props) {
   return (
     <>
       <Head>
-        <title>Register</title>
+        <title>Get Started With Boozy.io | Boozy.io</title>
       </Head>
       <div className=" w-full flex flex-col p-3 justify-center items-center min-h-screen    ">
-        <div className="card w-full sm:w-2/3 md:w-2/5 bg-neutral text-neutral-content">
+        <div className="card w-full sm:w-2/3 md:w-2/5 bg-transparent  text-neutral-content">
           <div className="card-body items-center text-center">
-            <h2 className="card-title">Register!</h2>
+            <h1 className="card-title  text-4xl mb-2">
+              Get started with{" "}
+              <Link href={"/"}>
+                <a className="text-primary">Boozy.io</a>
+              </Link>
+            </h1>
             {registerError && (
               <div className="my-2 w-full ">
                 <Alert variant="error">{registerError}</Alert>
@@ -108,7 +113,7 @@ function RegisterPage({}: Props) {
                   {...register("email")}
                   type="email"
                   placeholder="example@gmail.com"
-                  className="input w-full "
+                  className="input w-full bg-neutral "
                 />
                 {errors.email?.message && (
                   <InputAlertLabel text={errors.email?.message || ""} />
@@ -122,7 +127,7 @@ function RegisterPage({}: Props) {
                   type="text"
                   id="name"
                   placeholder="Ex: John doe"
-                  className="input w-full"
+                  className="input w-full bg-neutral"
                   {...register("name")}
                 />
                 {errors.name?.message && (
@@ -137,7 +142,7 @@ function RegisterPage({}: Props) {
                   {...register("password")}
                   type={showPw ? "text" : "password"}
                   placeholder="*******"
-                  className="input w-full"
+                  className="input w-full bg-neutral"
                 />
                 {errors.password?.message && (
                   <InputAlertLabel text={errors.password?.message || ""} />
@@ -151,7 +156,7 @@ function RegisterPage({}: Props) {
                   {...register("passwordConfirmation")}
                   type={showPw ? "text" : "password"}
                   placeholder="*******"
-                  className="input w-full"
+                  className="input w-full bg-neutral"
                 />
                 {errors.passwordConfirmation?.message && (
                   <InputAlertLabel
@@ -193,4 +198,4 @@ function RegisterPage({}: Props) {
   );
 }
 
-export default RegisterPage;
+export default GetStartedPage;
