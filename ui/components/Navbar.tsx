@@ -5,18 +5,18 @@ type Props = {};
 
 const navigations = [
   {
-    name: "Home",
-    href: "/",
-  },
-  {
     name: "About",
     href: "/about",
+  },
+  {
+    name: "Help",
+    href: "/help",
   },
 ];
 
 function Navbar({}: Props) {
   return (
-    <div className="container mx-auto px-2 fixed ">
+    <div className="flex w-full mx-auto px-2 fixed ">
       <div className="navbar relative bg-base-200 py-4  z-30 ">
         <div className="navbar-start">
           <div className="dropdown">
@@ -52,8 +52,8 @@ function Navbar({}: Props) {
               })}
             </ul>
           </div>
-          <a className="btn btn-ghost hover:bg-transparent normal-case text-xl">
-            MyReader
+          <a className="btn btn-ghost hover:bg-transparent normal-case text-xl text-primary ">
+            Boozy.io
           </a>
         </div>
         <div className="navbar-center hidden lg:flex">
@@ -61,9 +61,11 @@ function Navbar({}: Props) {
             {navigations.map((nav, i) => {
               const key = i;
               return (
-                <li key={key}>
+                <li key={key} className="px-2">
                   <Link href={nav.href}>
-                    <a className="  ">{nav.name}</a>
+                    <a className="text-gray-500 hover:bg-neutral hover:text-current font-semibold ">
+                      {nav.name}
+                    </a>
                   </Link>
                 </li>
               );
@@ -71,8 +73,8 @@ function Navbar({}: Props) {
           </ul>
         </div>
         <div className="navbar-end">
-          <Link href={"/auth/register"}>
-            <a className="btn">Get started</a>
+          <Link href={"/auth/login"}>
+            <a className="btn btn-primary ">Login</a>
           </Link>
         </div>
       </div>
