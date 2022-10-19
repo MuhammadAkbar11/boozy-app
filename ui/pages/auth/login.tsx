@@ -50,8 +50,7 @@ function LoginPage({}: Props) {
         { withCredentials: true }
       );
       setLoading(false);
-      // console.log(result);
-      // router.push("/");
+      router.push("/");
     } catch (e: any) {
       const message = e.response?.data?.message ?? "Login failed";
       console.log(e);
