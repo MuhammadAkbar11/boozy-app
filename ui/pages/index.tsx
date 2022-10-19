@@ -1,31 +1,21 @@
+import type { GetServerSideProps, NextPage } from "next";
 import axios from "axios";
-import type { NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
 import swr from "swr";
 import { useEffect } from "react";
 import Link from "next/link";
 import Navbar from "../components/Navbar";
+import useSWR from "swr";
+import fetcher from "../utils/fetcher";
+import { User } from "../utils/interfaces";
 
-const Home: NextPage = () => {
-  useEffect(() => {
-    const loadSession = async () => {
-      try {
-        const result = await axios.get(
-          `${process.env.NEXT_PUBLIC_SERVER_ENDPOINT}/api/me`,
-          { withCredentials: true }
-        );
-
-        console.log(result.data);
-        // router.push("/");
-      } catch (e: any) {
-        const message = e.response?.data?.message ?? "Login failed";
-        console.log(e);
-      }
-    };
-
-    loadSession();
-  }, []);
+const Home: NextPage<{ fallbackData: User }> = ({ fallbackData }) => {
+  const { data: authUser, error } = useSWR<User | null>(
+    `${process.env.NEXT_PUBLIC_SERVER_ENDPOINT}/api/me`,
+    fetcher,
+    { fallbackData }
+  );
 
   return (
     <>
@@ -33,7 +23,7 @@ const Home: NextPage = () => {
         <title>Welcome</title>
       </Head>
       <div className=" bg-base-200 ">
-        <Navbar />
+        <Navbar authUser={authUser} />
         <section className="container md:px-6 mx-auto ">
           <div className="hero min-h-screen bg-base-200">
             <div className="hero-content text-center">
@@ -60,6 +50,15 @@ const Home: NextPage = () => {
       </div>
     </>
   );
+};
+
+export const getServerSideProps: GetServerSideProps = async context => {
+  const data = await fetcher<{ [key: string]: any }>(
+    `${process.env.NEXT_PUBLIC_SERVER_ENDPOINT}/api/me`,
+    context.req.headers
+  );
+
+  return { props: { fallbackData: data } };
 };
 
 export default Home;

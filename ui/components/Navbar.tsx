@@ -1,7 +1,8 @@
 import Link from "next/link";
 import React from "react";
+import { User } from "../utils/interfaces";
 
-type Props = {};
+type Props = { authUser: User | null | undefined };
 
 const navigations = [
   {
@@ -14,7 +15,7 @@ const navigations = [
   },
 ];
 
-function Navbar({}: Props) {
+function Navbar({ authUser }: Props) {
   return (
     <div className="flex w-full mx-auto px-2 fixed ">
       <div className="navbar relative bg-base-200 py-4  z-30 ">
@@ -73,9 +74,47 @@ function Navbar({}: Props) {
           </ul>
         </div>
         <div className="navbar-end">
-          <Link href={"/auth/login"}>
-            <a className="btn btn-primary ">Login</a>
-          </Link>
+          {!authUser && (
+            <Link href={"/auth/login"}>
+              <a className="btn btn-primary ">Login</a>
+            </Link>
+          )}
+
+          {authUser && (
+            <div className="dropdown dropdown-end ">
+              <label
+                tabIndex={0}
+                className="btn btn-ghost btn-circle avatar placeholder"
+              >
+                {!authUser?.image ? (
+                  <div className="bg-neutral-focus text-neutral-content rounded-full w-16">
+                    <span className="text-xl">
+                      {" "}
+                      {authUser?.name?.charAt(0)}
+                    </span>
+                  </div>
+                ) : (
+                  <div className="w-10 rounded-full">
+                    <img src="https://placeimg.com/80/80/people" />
+                  </div>
+                )}
+              </label>
+              <ul
+                tabIndex={0}
+                className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
+              >
+                <li>
+                  <a>Profile</a>
+                </li>
+                <li>
+                  <a>Settings</a>
+                </li>
+                <li>
+                  <a>Logout</a>
+                </li>
+              </ul>
+            </div>
+          )}
         </div>
       </div>
     </div>
