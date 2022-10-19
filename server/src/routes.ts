@@ -1,5 +1,12 @@
 import { Application, Request, Response } from "express";
 import {
+  createComicHandler,
+  deleteComicHandler,
+  getComicHandler,
+  getListComicsHandler,
+} from "./controller/comic.controller";
+
+import {
   createProductHandler,
   deleteProductHandler,
   getListProductHandler,
@@ -17,6 +24,11 @@ import {
 } from "./controller/user.controller";
 import requiredUser from "./middleware/requiredUser";
 import validateResource from "./middleware/validateResource";
+import {
+  createComicSchema,
+  deleteComicSchema,
+  getComicSchema,
+} from "./schema/comic.schema";
 import {
   createProductSchema,
   deleteProductSchema,
@@ -44,26 +56,39 @@ function routes(app: Application) {
   app.get("/api/sessions", requiredUser, getUserSessionHandler);
   app.delete("/api/sessions", requiredUser, deleteSessionHandler);
 
-  app.get("/api/products", getListProductHandler);
+  app.get("/api/comics", getListComicsHandler);
+  app.post(
+    "/api/comics",
+    [validateResource(createComicSchema)],
+    createComicHandler
+  );
+  app.get(
+    "/api/comics/:comicId",
+    [requiredUser, validateResource(getComicSchema)],
+    getComicHandler
+  );
+  app.delete(
+    "/api/comics/:comicId",
+    validateResource(deleteComicSchema),
+    deleteComicHandler
+  );
 
+  app.get("/api/products", getListProductHandler);
   app.post(
     "/api/products",
     [requiredUser, validateResource(createProductSchema)],
     createProductHandler
   );
-
   app.put(
     "/api/products/:productId",
     [requiredUser, validateResource(updateProductSchema)],
     updateProductHandler
   );
-
   app.get(
     "/api/products/:productId",
     validateResource(getProductSchema),
     getProductHandler
   );
-
   app.delete(
     "/api/products/:productId",
     [requiredUser, validateResource(deleteProductSchema)],
