@@ -9,14 +9,18 @@ const payload = {
     synopsis_en: z.string({ required_error: "Id Synopsis is required" }),
     description: z.string({ required_error: "Description is required" }),
     thumbnail: z.string({ required_error: "Thumbnail is required" }),
-    sources: z.array(
-      z.object({
-        website: z.string(),
-        url: z.string(),
-        rating: z.string(),
-        lang: z.string(),
-      })
-    ),
+    genres: z.array(z.string()),
+    sources: z
+      .array(
+        z
+          .object({
+            name: z.string(),
+            url: z.string().optional(),
+            rating: z.string().optional(),
+          })
+          .passthrough()
+      )
+      .optional(),
   }),
 };
 

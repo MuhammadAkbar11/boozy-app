@@ -25,6 +25,7 @@ export async function createComicHandler(
     thumbnail,
     type,
     sources,
+    genres,
   } = req.body;
 
   try {
@@ -39,6 +40,7 @@ export async function createComicHandler(
       sources: sources,
       thumbnail,
       type,
+      genres,
     });
 
     return res.status(200).json({
