@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import slug from "slug";
 import {
   CreateComicInput,
   DeleteComic,
@@ -28,7 +29,17 @@ export async function createComicHandler(
     genres,
   } = req.body;
 
+  let comicSlug: string = slug(title);
+
   try {
+    const existSlug = await findComicService({
+      $or: [{ slug: { $regex: comicSlug, $options: "i" } }],
+    });
+
+    if (existSlug.length !== 0) {
+      comicSlug = `${comicSlug}-${existSlug.length}`;
+    }
+
     const post = await createComicService({
       title,
       description,
@@ -41,6 +52,7 @@ export async function createComicHandler(
       thumbnail,
       type,
       genres,
+      slug: comicSlug,
     });
 
     return res.status(200).json({

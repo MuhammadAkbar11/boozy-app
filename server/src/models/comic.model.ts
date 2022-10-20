@@ -26,6 +26,7 @@ export interface IComicInput {
   description: string;
   thumbnail: string;
   genres: string[];
+  slug?: string;
 }
 
 export interface ComicDocument extends IComicInput, mongoose.Document {
@@ -64,6 +65,7 @@ const comicSchema = new mongoose.Schema(
     sources: [Object],
     description: String,
     status: String,
+    slug: String,
   },
   {
     timestamps: true,
