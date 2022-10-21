@@ -35,7 +35,7 @@ export async function findOneComicService(
   }
 }
 
-export async function finAndUpdateComicService(
+export async function findAndUpdateComicService(
   query: mongoose.FilterQuery<ComicDocument>,
   update: Omit<IComicInput, "comicId">,
   options: mongoose.QueryOptions = {}

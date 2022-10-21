@@ -4,6 +4,7 @@ import {
   deleteComicHandler,
   getComicHandler,
   getListComicsHandler,
+  updateComicHandler,
 } from "./controller/comic.controller";
 
 import {
@@ -28,6 +29,7 @@ import {
   createComicSchema,
   deleteComicSchema,
   getComicSchema,
+  updateComicSchema,
 } from "./schema/comic.schema";
 import {
   createProductSchema,
@@ -66,6 +68,11 @@ function routes(app: Application) {
     "/api/comics/:comicId",
     [requiredUser, validateResource(getComicSchema)],
     getComicHandler
+  );
+  app.put(
+    "/api/comics/:comicId",
+    [validateResource(updateComicSchema)],
+    updateComicHandler
   );
   app.delete(
     "/api/comics/:comicId",

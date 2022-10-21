@@ -1,4 +1,5 @@
 import z from "zod";
+import _ from "lodash";
 
 const payload = {
   body: z.object({
@@ -24,6 +25,10 @@ const payload = {
   }),
 };
 
+const payloadUpdate = {
+  body: payload.body.omit({ sources: true }),
+};
+
 const params = {
   params: z.object({
     comicId: z.string({
@@ -34,7 +39,7 @@ const params = {
 
 export const createComicSchema = z.object({ ...payload });
 
-export const updateComicSchema = z.object({ ...payload, ...params });
+export const updateComicSchema = z.object({ ...payloadUpdate, ...params });
 
 export const deleteComicSchema = z.object({ ...params });
 
