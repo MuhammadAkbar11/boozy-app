@@ -1,4 +1,6 @@
-# NodeJs REST API using Typescript
+# Boozy web comics bookmark
+
+Boozy.io is the best place to keep all your favorite manhwas, mangas, manhuas, or novels.
 
 ## Requirments
 
@@ -8,12 +10,12 @@
 ## Technology Stack
 
 1. **Typescript**
-2. **NodeJS** with **Express.js** framework
+2. **NodeJS** with **Express.js** Framework
 3. **REST API**
-4. **MongoDB** database
+4. **MongoDB** Database
 5. **Mongoose** ODM
 6. **JWT** Authentication
-7. **Zod** schema validation
+7. **Zod** Schema Validation
 8. **Jest** Testing
 
 
