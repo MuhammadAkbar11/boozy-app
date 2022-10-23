@@ -7,10 +7,12 @@ const setNanoId = nanoid.customAlphabet(
 );
 
 export interface ILinkSource {
+  sourceId?: string;
   name: string;
   url?: string;
   rating?: string;
-  [key: string]: any;
+  lang?: string[];
+  type?: string;
 }
 
 export interface IComicInput {
@@ -25,7 +27,7 @@ export interface IComicInput {
   sources?: Array<ILinkSource>;
   description: string;
   thumbnail: string;
-  genres: string[];
+  tags: string[];
   slug?: string;
 }
 
@@ -61,8 +63,25 @@ const comicSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    genres: [String],
-    sources: [Object],
+    tags: [String],
+    sources: [
+      new mongoose.Schema(
+        {
+          sourceId: {
+            type: String,
+            required: true,
+            unique: true,
+            default: () => `SC_${setNanoId(10)}`,
+          },
+          name: { type: String },
+          url: { type: String },
+          type: { type: String },
+          lang: { type: [String] },
+          rating: { type: String },
+        },
+        { strict: false }
+      ),
+    ],
     description: String,
     status: String,
     slug: String,

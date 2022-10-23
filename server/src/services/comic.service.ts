@@ -1,5 +1,9 @@
 import mongoose from "mongoose";
-import ComicModel, { ComicDocument, IComicInput } from "../models/comic.model";
+import ComicModel, {
+  ComicDocument,
+  IComicInput,
+  ILinkSource,
+} from "../models/comic.model";
 import logger from "../utils/logger.utils";
 
 export async function createComicService(input: Omit<IComicInput, "comicId">) {
@@ -53,6 +57,19 @@ export async function deleteComicService(
 ) {
   try {
     return await ComicModel.deleteOne(query);
+  } catch (error: any) {
+    logger.error(error);
+    throw new Error(error);
+  }
+}
+
+export async function findAndUpdateComicSourceService(
+  query: mongoose.FilterQuery<ComicDocument>,
+  update: mongoose.UpdateQuery<Omit<ILinkSource, "comicId">>,
+  options: mongoose.QueryOptions = {}
+) {
+  try {
+    return await ComicModel.findOneAndUpdate(query, update, options);
   } catch (error: any) {
     logger.error(error);
     throw new Error(error);

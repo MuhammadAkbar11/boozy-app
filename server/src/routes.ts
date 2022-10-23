@@ -1,10 +1,13 @@
 import { Application, Request, Response } from "express";
 import {
   createComicHandler,
+  CreateComicSourceHandler,
   deleteComicHandler,
+  deleteComicSourceHandler,
   getComicHandler,
   getListComicsHandler,
   updateComicHandler,
+  updateComicSourceHandler,
 } from "./controller/comic.controller";
 
 import {
@@ -27,9 +30,12 @@ import requiredUser from "./middleware/requiredUser";
 import validateResource from "./middleware/validateResource";
 import {
   createComicSchema,
+  createComicSourceSchema,
   deleteComicSchema,
+  deleteComicSourceSchema,
   getComicSchema,
   updateComicSchema,
+  updateComicSourceSchema,
 } from "./schema/comic.schema";
 import {
   createProductSchema,
@@ -78,6 +84,24 @@ function routes(app: Application) {
     "/api/comics/:comicId",
     validateResource(deleteComicSchema),
     deleteComicHandler
+  );
+
+  app.put(
+    "/api/comics-source/:comicId/:sourceId",
+    validateResource(updateComicSourceSchema),
+    updateComicSourceHandler
+  );
+
+  app.delete(
+    "/api/comics-source/:comicId/:sourceId",
+    validateResource(deleteComicSourceSchema),
+    deleteComicSourceHandler
+  );
+
+  app.post(
+    "/api/comics-source/:comicId",
+    validateResource(createComicSourceSchema),
+    CreateComicSourceHandler
   );
 
   app.get("/api/products", getListProductHandler);
